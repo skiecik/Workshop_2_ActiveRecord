@@ -1,4 +1,4 @@
-package useCase;
+package useCase.user;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,22 +6,27 @@ import java.sql.SQLException;
 
 import models.User;
 
-public class SaveToDbCase {
+public class LoadUserByIdCase {
 
 	public static void main(String[] args) {
-
-		User user = new User("skiecik", "skiecik@skietowsky.com", "password");
 
 		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/programmers_school?"
 				+ "useSSL=false&useUnicode=true&" + "useJDBCCompliantTimezoneShift=true&"
 				+ "useLegacyDatetimeCode=false&" + "serverTimezone=Europe/Warsaw", "root", "root")) {
 
-			user.saveToDB(conn);
+			User user = User.loadUserById(conn, 1);
 			System.out.println(user.getId());
-
+			System.out.println(user.getUserName());
+			System.out.println(user.getEmail());
+			System.out.println(user.getUserGroup());
+			
+			user = User.loadUserById(conn, 5);
+			System.out.println(user);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 	}
+
 }

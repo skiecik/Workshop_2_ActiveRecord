@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -37,6 +40,14 @@ public class User {
 			if (rs.next()) {
 				this.id = rs.getInt(1);
 			}
+		} else {
+			String query = "UPDATE users SET user_name=?, email=?, password=? WHERE id=?";
+			PreparedStatement prep = conn.prepareStatement(query);
+			prep.setString(1, this.userName);
+			prep.setString(2, this.email);
+			prep.setString(3, this.password);
+			prep.setInt(4, this.id);
+			prep.executeUpdate();
 		}
 	}
 	
@@ -56,7 +67,34 @@ public class User {
 		}
 		return null;
 	}
+	
+	public static List<User> loadAllUsers(Connection conn) throws SQLException {
+		String query = "SELECT * FROM users";
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		List<User> users = new ArrayList<>();
+		while (rs.next()) {
+			User user = new User();
+			user.id = rs.getInt("id");
+			user.userName = rs.getString("user_name");
+			user.email = rs.getString("email");
+			user.password = rs.getString("password");
+			user.userGroup = rs.getInt("user_group_id");
+			users.add(user);
+		}
+		return users;
+	}
 
+	public void delteUser(Connection conn) throws SQLException {
+		if (this.id != 0) {
+			String query = "DELETE FROM users WHERE id = ?";
+			PreparedStatement prep = conn.prepareStatement(query);
+			prep.setInt(1, this.id);
+			prep.executeUpdate();
+			this.id = 0;
+		}
+	}
+	
 	public String getUserName() {
 		return userName;
 	}
