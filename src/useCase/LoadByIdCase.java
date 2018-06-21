@@ -15,11 +15,13 @@ public class LoadByIdCase {
 				+ "useLegacyDatetimeCode=false&" + "serverTimezone=Europe/Warsaw", "root", "root")) {
 
 			User user = User.loadUserById(conn, 1);
-
 			System.out.println(user.getId());
 			System.out.println(user.getUserName());
 			System.out.println(user.getEmail());
 			System.out.println(user.getUserGroup());
+			
+			user = User.loadUserById(conn, 5);
+			System.out.println(user);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
