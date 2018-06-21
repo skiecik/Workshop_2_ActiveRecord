@@ -85,7 +85,7 @@ public class User {
 		return users;
 	}
 
-	public void delteUser(Connection conn) throws SQLException {
+	public void deleteUser(Connection conn) throws SQLException {
 		if (this.id != 0) {
 			String query = "DELETE FROM users WHERE id = ?";
 			PreparedStatement prep = conn.prepareStatement(query);

@@ -1,28 +1,28 @@
-package useCase.user;
+package useCase.group;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import models.User;
+import models.Group;
 
-public class DeleteUserCase {
+public class UpdateGroupCase {
 
 	public static void main(String[] args) {
-		
+
 		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/programmers_school?"
 				+ "useSSL=false&useUnicode=true&" + "useJDBCCompliantTimezoneShift=true&"
 				+ "useLegacyDatetimeCode=false&" + "serverTimezone=Europe/Warsaw", "root", "root")) {
-
-			User user = User.loadUserById(conn, 1);
-			user.deleteUser(conn);
+			
+			Group group = Group.loadGroupById(conn, 1);
+			group.setName("Group1");
+			group.saveToDB(conn);
+			
 			System.out.println("success");
-			System.out.println(user.getId());
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 }
