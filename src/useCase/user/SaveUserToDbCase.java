@@ -10,7 +10,7 @@ public class SaveUserToDbCase {
 
 	public static void main(String[] args) {
 
-		User user = new User("skiecik", "skiecik@skietowsky.com", "password");
+		User user = new User("skiecik", "skiecik@skietowsky.com", "password", 1);
 
 		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/programmers_school?"
 				+ "useSSL=false&useUnicode=true&" + "useJDBCCompliantTimezoneShift=true&"

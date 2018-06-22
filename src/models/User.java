@@ -18,23 +18,25 @@ public class User {
 	 private String password;
 	 private int userGroup;
 	
-	 public User(String userName, String email, String password) {
+	 public User(String userName, String email, String password, int userGroup) {
 		this.userName = userName;
 		this.email = email;
 		this.setPassword(password);
+		this.userGroup = userGroup;
 	}
 
 	public User() {}
 	
 	public void saveToDB(Connection conn) throws SQLException{
 		if (this.id == 0) {
-			String query = "INSERT INTO users (user_name, email, password) "
-					+ "VALUES (?, ?, ?)";
+			String query = "INSERT INTO users (user_name, email, password, user_group_id) "
+					+ "VALUES (?, ?, ?, ?)";
 			String[] generatedColumns = { "id" };
 			PreparedStatement prep = conn.prepareStatement(query, generatedColumns);
 			prep.setString(1, this.userName);
 			prep.setString(2, this.email);
 			prep.setString(3, this.password);
+			prep.setInt(4, this.userGroup);
 			prep.executeUpdate();
 			ResultSet rs = prep.getGeneratedKeys();
 			if (rs.next()) {
