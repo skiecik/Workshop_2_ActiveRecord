@@ -94,6 +94,44 @@ public class Solution {
 		}
 	}
 	
+	public static List<Solution> loadAllByUserId(Connection conn, int id) throws SQLException {
+		String query = "SELECT * FROM solutions WHERE user_id = ?";
+		List<Solution> solutions = new ArrayList<>();
+		PreparedStatement prep = conn.prepareStatement(query);
+		prep.setInt(1, id);
+		ResultSet rs = prep.executeQuery();
+		while (rs.next()) {
+			Solution solution = new Solution();
+			solution.id = rs.getInt("id");
+			solution.description = rs.getString("description");
+			solution.created = rs.getTimestamp("created");
+			solution.updated = rs.getTimestamp("updated");
+			solution.exerciseId = rs.getInt("exercise_id");
+			solution.userId = rs.getInt("user_id");
+			solutions.add(solution);
+		}
+		return solutions;
+	}
+	
+	public static List<Solution> loadAllByExerciseId(Connection conn, int id) throws SQLException {
+		String query = "SELECT * FROM solutions WHERE exercise_id = ? ORDER BY created DESC";
+		List<Solution> solutions = new ArrayList<>();
+		PreparedStatement prep = conn.prepareStatement(query);
+		prep.setInt(1, id);
+		ResultSet rs = prep.executeQuery();
+		while (rs.next()) {
+			Solution solution = new Solution();
+			solution.id = rs.getInt("id");
+			solution.description = rs.getString("description");
+			solution.created = rs.getTimestamp("created");
+			solution.updated = rs.getTimestamp("updated");
+			solution.exerciseId = rs.getInt("exercise_id");
+			solution.userId = rs.getInt("user_id");
+			solutions.add(solution);
+		}
+		return solutions;
+	}
+	
 	public String getDescription() {
 		return description;
 	}
