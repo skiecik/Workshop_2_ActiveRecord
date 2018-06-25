@@ -108,7 +108,7 @@ public class UsersManagment {
 			user.deleteUser(conn);
 			System.out.println("User succesfully deleted");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("There is not a user with this id");
 		}
 	}
 
