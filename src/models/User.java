@@ -116,6 +116,23 @@ public class User {
 		return users;		
 	}
 	
+	public static User loadUserByEmail(Connection conn, String email) throws SQLException{
+		String query = "SELECT * FROM users WHERE email = ?";
+		PreparedStatement prep = conn.prepareStatement(query);
+		prep.setString(1, email);
+		ResultSet rs = prep.executeQuery();
+		if (rs.next()) {
+			User loadedUser = new User();
+			loadedUser.id = rs.getInt("id");
+			loadedUser.userName = rs.getString("user_name");
+			loadedUser.email = rs.getString("email");
+			loadedUser.password = rs.getString("password");
+			loadedUser.userGroup = rs.getInt("user_group_id");
+			return loadedUser;
+		}
+		return null;
+	}
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -146,6 +163,10 @@ public class User {
 
 	public int getId() {
 		return id;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 	
 }

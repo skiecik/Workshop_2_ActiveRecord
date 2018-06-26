@@ -15,9 +15,9 @@ public class ExercisesManagment {
 		while (true) {
 			List<Exercise> exercises = Exercise.loadAllExercises(conn);
 			for (Exercise e : exercises) {
-				System.out.println(e.getId());
-				System.out.println(e.getTitle());
-				System.out.println(e.getDescription());
+				System.out.println("Exercise id = " + e.getId());
+				System.out.println("Exercise title = " + e.getTitle());
+				System.out.println("Exercise description = " + e.getDescription());
 				System.out.println("-------------------");
 			}
 
@@ -75,7 +75,7 @@ public class ExercisesManagment {
 		ex.saveToDB(conn);
 	}
 
-	private static void deleteExercise(Scanner scan, Connection conn) {
+	private static void deleteExercise(Scanner scan, Connection conn) throws SQLException{
 		int id = 0;
 
 		while (true) {
@@ -88,12 +88,8 @@ public class ExercisesManagment {
 			}
 		}
 
-		try {
 			Exercise ex = Exercise.loadExerciseById(conn, id);
 			ex.deleteExercise(conn);
 			System.out.println("Exercise successfully deleted");
-		} catch (SQLException e) {
-			System.out.println("There is not exercise with this id");
-		}
 	}
 }

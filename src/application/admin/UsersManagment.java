@@ -90,7 +90,7 @@ public class UsersManagment {
 			System.out.println("User edited");
 	}
 
-	private static void deleteUser(Scanner scan, Connection conn) {
+	private static void deleteUser(Scanner scan, Connection conn) throws SQLException  {
 		int id = 0;
 
 		while (true) {
@@ -102,14 +102,9 @@ public class UsersManagment {
 				System.out.println("Not a number");
 			}
 		}
-		
-		try {
 			User user = User.loadUserById(conn, id);
 			user.deleteUser(conn);
 			System.out.println("User succesfully deleted");
-		} catch (SQLException e) {
-			System.out.println("There is not a user with this id");
-		}
 	}
 
 	private static User getUser(Scanner scan) {
